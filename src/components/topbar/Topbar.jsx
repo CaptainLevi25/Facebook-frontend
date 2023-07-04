@@ -18,13 +18,13 @@ export default function Topbar({user,profilee,setprofile,contract,finduser}) {
   return (
     <div className="topbarContainer">
       <div className="topbarLeft">
-        <span className="logo">Lamasocial</span>
+        <span className="logo">D-META</span>
       </div>
       <div className="topbarCenter">
         <div className="searchbar">
           <Search className="searchIcon" />
           <input
-          onChange={(e)=>{setprofile(e.target.value)}}
+          onChange={(e)=>{settext(e.target.value)}}
             placeholder="Search for friend, post or video"
             className="searchInput"
           />
@@ -32,11 +32,14 @@ export default function Topbar({user,profilee,setprofile,contract,finduser}) {
       </div>
       <div className="topbarRight">
         <div className="topbarLinks">
-          <span><button style={{cursor:"pointer",marginRight:"12px"}} onClick={()=>{
+          <span><button style={{cursor:"pointer",marginRight:"12px"}} 
+          
+          onMouseEnter={()=>{ setprofile(text);}}
+          onClick={()=>{
             finduser();nav('/profile');
           }}> Find User </button></span>
-          <span className="topbarLink">Homepage</span>
-          <span className="topbarLink">Timeline</span>
+          <span className="topbarLink" onClick={()=>{nav('/home')}}>Homepage</span>
+          <span className="topbarLink"></span>
         </div>
         <div className="topbarIcons">
           <div className="topbarIconItem">
@@ -52,7 +55,7 @@ export default function Topbar({user,profilee,setprofile,contract,finduser}) {
             <span className="topbarIconBadge">1</span>
           </div>
         </div>
-        <img src={user.profilepic} alt="" className="topbarImg"/>
+        <img onMouseEnter={()=>{setprofile(user.name)}} onClick={()=> {finduser();nav('/profile')}} src={user.profilepic} alt="" className="topbarImg"/>
       </div>
     </div>
   );

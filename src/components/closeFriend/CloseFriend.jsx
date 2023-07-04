@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./closeFriend.css";
 
-export default function CloseFriend({ index, u, contract, user }) {
+export default function CloseFriend({ index, u, contract, user,setjugg,iii }) {
   const [userdataa, setuserdataa] = useState(null);
   const finduserr = async () => {
     try {
@@ -20,7 +20,14 @@ export default function CloseFriend({ index, u, contract, user }) {
   }, []);
 
   const accept = async () => {
-      try{    await contract.acceptFriendRequests(index);}
+      try{   
+        
+        
+        const tx = await contract.acceptFriendRequests(index);
+        await tx.wait();
+        setjugg("fhjdjcx")
+      
+      }
       catch{console.log("error in accepting friend request")}
 
 
@@ -54,10 +61,10 @@ export default function CloseFriend({ index, u, contract, user }) {
       <div>
         {" "}
         <span style={{ marginRight: "0px" }} className="sidebarFriendName">
-          <button onClick={accept}>Accept</button>
+          <button className="mna"onClick={accept}>Accept</button>
         </span>
         <span style={{ marginRight: "0px" }} className="sidebarFriendName">
-          <button onClick={decline}>Decline</button>
+          <button className="mna1"onClick={decline}>Decline</button>
         </span>
       </div>
     </li>

@@ -5,6 +5,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import axios, { all } from "axios"
 import Alert from 'react-bootstrap/Alert';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
+import { NavigateBefore } from "@material-ui/icons";
 export default function Login({ contract, account, provider, setuser, user }) {
   const nav= useNavigate();
   const [file, setFile] = useState(null);
@@ -73,6 +74,10 @@ export default function Login({ contract, account, provider, setuser, user }) {
     if (reg !== 0) {
       const data = await contract.getOthersUserStruct(regg);
       setuser({ name: data.userName, profilepic: data.profilePic });
+    //    localStorage.setItem('username',user.name);
+    //  localStorage.setItem('userpic',user.profilepic);
+    // setuser({name : localStorage.getItem('username'), profilepic:  localStorage.getItem('userpic')})
+     
     }}catch{
       console.log("no user")
     }
@@ -91,18 +96,19 @@ export default function Login({ contract, account, provider, setuser, user }) {
         profilepic:
          coverpic ? coverpic : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXhwKw2TfJxMfz-tLOJtYsWgcivmu8CbSKe1iBR7H-Ug&s",
       });
+      
      
     } catch {
-      nav("/");
+      nav("/home");
     }
   };
   return (
     <div className="login">
       <div className="loginWrapper">
         <div className="loginLeft">
-          <h3 className="loginLogo">Lamasocial</h3>
+          <h3 className="loginLogo">D-META</h3>
           <span className="loginDesc">
-            Connect with friends and the world around you on Lamasocial.
+            Connect with friends and the world around you on D-META.
           </span>
         </div>
         <div className="loginRight">

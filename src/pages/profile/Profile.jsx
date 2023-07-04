@@ -5,7 +5,7 @@ import Feed from "../../components/feed/Feed";
 import Rightbar from "../../components/rightbar/Rightbar";
 import { useEffect, useState } from "react";
 
-export default function Profile({ user, contract, account,profilee,profiledata,sendreq,setprofile,finduser  }) {
+export default function Profile({ user, contract, account,profilee,profiledata,sendreq,setprofile,finduser,ans,otherfrnd,already,j ,setj }) {
   const [userdata,setuserdata]=useState(null);
   // const finduser=async()=>{
   //     try{ const reg = await contract.findUser(profilee);
@@ -26,7 +26,7 @@ export default function Profile({ user, contract, account,profilee,profiledata,s
     <>
       <Topbar user={user} setprofile={setprofile} finduser={finduser}/>
       <div className="profile">
-        <Sidebar user={user} contract={contract}/>
+        <Sidebar user={user} contract={contract} setj={setj}/>
         <div className="profileRight">
           <div className="profileRightTop">
             <div className="profileCover">
@@ -44,7 +44,7 @@ export default function Profile({ user, contract, account,profilee,profiledata,s
           </div>
           <div className="profileRightBottom">
             <Feed user={user} contract={contract} profiledata={profiledata} profilee={profilee} />
-            <Rightbar profile  profilee={profilee} profiledata={profiledata} sendreq={sendreq}/>
+            <Rightbar profile  profilee={profilee} profiledata={profiledata} sendreq={sendreq} ans = {ans} user = {user} contract={contract} otherfrnd={otherfrnd} already={already} j={j}/>
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./online.css";
 
-export default function Online({user,contract}) {
+export default function Online({user,contract,j}) {
   const [userdataa, setuserdataa] = useState(null);
   const finduserr = async () => {
     try {
@@ -17,6 +17,12 @@ export default function Online({user,contract}) {
   useEffect(()=>{
     contract && finduserr();
   },[])
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     contract && finduserr();
+  //   }, 5000);
+  //   return () => clearInterval(interval);
+  // }, []);
   return (
     <li className="rightbarFriend">
       <div className="rightbarProfileImgContainer">

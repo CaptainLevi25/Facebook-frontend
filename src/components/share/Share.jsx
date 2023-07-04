@@ -1,18 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./share.css";
 import {PermMedia, Label,Room, EmojiEmotions} from "@material-ui/icons"
 import axios from "axios";
 import ProgressBar from 'react-bootstrap/ProgressBar';
 
-export default function Share({user,contract, account, provider,seeallpost}) {
+
+export default function Share({user,contract, account, provider,seeallpost,setjugaad}) {
   const [myposts,setmyposts] = useState(null);
   const [file, setFile] = useState(null);
   const [fileName, setFileName] = useState("No image selected");
   const [uploaded, setUploaded] = useState(null);
   const [coverpic,setcoverpic] = useState(null);
+  
+  
+
   const sharepost=async(hello)=>{
-      try{await contract.doAPost(hello);
-      //  seeallpost();
+      try{
+        const tx  = await contract.doAPost(hello);
+        // const receipt = await wait();
+        await tx.wait();
+        console.log("hello");
+        setjugaad("hello");
+       
     }
       catch{alert("sorry could not upload")};
     }
@@ -41,6 +50,7 @@ export default function Share({user,contract, account, provider,seeallpost}) {
           const ImgHash = `https://gateway.pinata.cloud/ipfs/${resFile.data.IpfsHash}`;
           console.log(ImgHash);
           setcoverpic(ImgHash);
+          setjugaad(ImgHash);
 
           alert("Successfully Image Uploaded");
           sharepost(ImgHash);
@@ -99,15 +109,15 @@ export default function Share({user,contract, account, provider,seeallpost}) {
                 </div>
                 <div className="shareOption">
                     <Label htmlColor="blue" className="shareIcon"/>
-                    <span className="shareOptionText">Tag</span>
+                    <span className="shareOptionText"></span>
                 </div>
                 <div className="shareOption">
                     <Room htmlColor="green" className="shareIcon"/>
-                    <span className="shareOptionText">Location</span>
+                    <span className="shareOptionText"></span>
                 </div>
                 <div className="shareOption">
                     <EmojiEmotions htmlColor="goldenrod" className="shareIcon"/>
-                    <span className="shareOptionText">Feelings</span>
+                    <span className="shareOptionText"></span>
                 </div>
             </div>
             <button onClick={handleSubmit}className="shareButton">Share</button>

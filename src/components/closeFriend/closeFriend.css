@@ -20,4 +20,23 @@
 }
 
 
-
+.mna{
+  border: none;
+  padding: 7px;
+  border-radius: 5px;
+  background-color: green;
+  font-weight: 500;
+  /* margin-right: 20px; */
+  cursor: pointer;
+  color: white;
+}
+.mna1{
+  border: none;
+  padding: 7px;
+  border-radius: 5px;
+  background-color: rgb(255, 0, 0);
+  font-weight: 500;
+  
+  cursor: pointer;
+  color: white;
+}

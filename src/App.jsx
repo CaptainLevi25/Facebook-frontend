@@ -5,13 +5,15 @@ import Register from "./pages/register/Register";
 import back from "./artifacts/contracts/socialMedia.sol/socialMedia.json";
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
-import { Navigate, Route, Routes, redirect } from "react-router-dom";
+import { Navigate, Route, Routes, redirect, useNavigate } from "react-router-dom";
 
 function App() {
+  const nav = useNavigate();
   const [account, setAccount] = useState("");
   const [contract, setContract] = useState(null);
   const [provider, setProvider] = useState(null);
   const [profiledata, setprofiledata] = useState(null);
+  const [j,setj] = useState("n");
   useEffect(() => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
 
@@ -28,7 +30,8 @@ function App() {
         const signer = provider.getSigner();
         const address = await signer.getAddress();
         setAccount(address);
-        let contractAddress = "0xd9145CCE52D386f254917e481eB44e9943F39138";
+        let contractAddress = "0x1742c8d0abA4eb87b998E628E9e0670585591214"
+        //"0x7141d3E41BD578BdB8C490929acB896f38418c1D";
 
         const contract = new ethers.Contract(contractAddress, back.abi, signer);
         //console.log(contract);
@@ -45,6 +48,8 @@ function App() {
   useEffect(() => {
     console.log(user);
     console.log(account);
+   // setuser(localStorage.getItem('user'));
+    console.log(localStorage.getItem('user'))
   }, [user]);
   const finduser=async()=>{
     try{ const reg = await contract.findUser(profilee);
@@ -52,6 +57,7 @@ function App() {
           const usedata = await contract.getOthersUserStruct(parseInt(regNo)) 
           setprofiledata(usedata);
           console.log(profiledata)
+         // nav('/profile')
         }catch{console.log("Could not fetch from profile file jsx");}
     
     
@@ -65,12 +71,55 @@ const sendreq = async () => {
     console.log(profiledata.userName);
   }
 };
+const [ans,setans] = useState(false);
+const [otherfrnd,setotherfrnd] = useState([]);
+const [mat,setmat] = useState([]);
+const [already,setalready] = useState(false);
+const checkfriend = async()=>{
+  try{
+    const rno = await contract.findUser(profiledata.userName);
+    const rnoo = parseInt(rno);
+   const anss = await contract.checkFriendRequestAlreadySent(rnoo);
+   const dans = await contract.seeOthersFriends(rnoo);
+   const alr = await contract.checkAlreadyFriends(profiledata.userName);
+
+   setalready(alr);
+  
+   setans(anss);
+  
+   console.log(ans);
+   console.log(dans);
+   
+   setotherfrnd(dans);
+ 
+  }
+  catch{console.log("soory could not checkkkk frnd req")}
+}
+    // const imgg = ()=>{
+    //   const imh=[];
+    //   otherfrnd.length!==0 && otherfrnd.map((item)=>{
+    //       const aa = contract.findUser(item);
+    //       const niga = parseInt(aa);
+    //       const nig = contract.getOthersUserStruct(niga);
+    //       imh.push(nig.profilePic);
+    //   })
+    //   setmat(imh);
+    //   console.log(mat)
+    // }
+
+
+  useEffect(()=>{
+
+      profiledata && checkfriend();
+      // otherfrnd.length!==0 && imgg();
+
+  },[profiledata])
 
   return (
     <Routes>
       <Route
         exact
-        path="login"
+        path="/"
         element={
           !user ? (
             <Login
@@ -81,14 +130,14 @@ const sendreq = async () => {
               user={user}
             />
           ) : (
-            <Navigate to="/" />
+            <Navigate to="/home" />
           )
         }
       ></Route>
 
       <Route
         exact
-        path="/"
+        path="/home"
         element={
           user ? (
             <Home
@@ -100,9 +149,11 @@ const sendreq = async () => {
               user={user}
               finduser={finduser}
               profiledata={profiledata}
+              setj ={setj}
+
             />
           ) : (
-            <Navigate to="/login" />
+            <Navigate to="/" />
           )
         }
       ></Route>
@@ -110,6 +161,7 @@ const sendreq = async () => {
         exact
         path="/profile"
         element={
+          profilee?
           <Profile
             account={account}
             provider={provider}
@@ -120,8 +172,12 @@ const sendreq = async () => {
             finduser={finduser}
             sendreq={sendreq}
             setprofile={setprofile}
-
-          />
+            ans = {ans}
+            otherfrnd = {otherfrnd}
+            already = {already}
+            setj ={setj}
+            j={j}
+          />: <Navigate to="/home" />
         }
       ></Route>
     </Routes>
