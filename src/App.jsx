@@ -30,7 +30,13 @@ function App() {
         const signer = provider.getSigner();
         const address = await signer.getAddress();
         setAccount(address);
-        let contractAddress = "0x1742c8d0abA4eb87b998E628E9e0670585591214"
+        let contractAddress ="0x1742c8d0abA4eb87b998E628E9e0670585591214"
+       
+       
+        // fleek + filecoin "0x1742c8d0abA4eb87b998E628E9e0670585591214"
+       
+        // final hosted address fleek+sepolia"0xA877d4515B3891181c0B141F4F4ec9091aB21f86"
+       
         //"0x7141d3E41BD578BdB8C490929acB896f38418c1D";
 
         const contract = new ethers.Contract(contractAddress, back.abi, signer);
@@ -49,8 +55,11 @@ function App() {
     console.log(user);
     console.log(account);
    // setuser(localStorage.getItem('user'));
-    console.log(localStorage.getItem('user'))
-  }, [user]);
+  //  setuser({name: localStorage.getItem('name'),profilepic : localStorage.getItem('pic')})
+  // localStorage.setItem('name',user.name);
+  // localStorage.setItem('pic',user.profilepic);
+
+  }, [account]);
   const finduser=async()=>{
     try{ const reg = await contract.findUser(profilee);
           const regNo = parseInt(reg);
@@ -106,7 +115,9 @@ const checkfriend = async()=>{
     //   setmat(imh);
     //   console.log(mat)
     // }
-
+  // useEffect(()=>{
+  //   setuser({ name: localStorage.getItem("name"), profilepic: localStorage.getItem("pic")});
+  // },[account])
 
   useEffect(()=>{
 
@@ -121,17 +132,15 @@ const checkfriend = async()=>{
         exact
         path="/"
         element={
-          !user ? (
-            <Login
+           (
+             <Login
               account={account}
               provider={provider}
               contract={contract}
               setuser={setuser}
               user={user}
             />
-          ) : (
-            <Navigate to="/home" />
-          )
+          ) 
         }
       ></Route>
 
@@ -139,7 +148,8 @@ const checkfriend = async()=>{
         exact
         path="/home"
         element={
-          user ? (
+         
+         ( user || (localStorage.getItem('name')&&localStorage.getItem('pic')))? (
             <Home
               profilee={profilee}
               setprofile={setprofile}
@@ -155,6 +165,7 @@ const checkfriend = async()=>{
           ) : (
             <Navigate to="/" />
           )
+         
         }
       ></Route>
       <Route
@@ -177,7 +188,7 @@ const checkfriend = async()=>{
             already = {already}
             setj ={setj}
             j={j}
-          />: <Navigate to="/home" />
+          />: <Navigate to="/" />
         }
       ></Route>
     </Routes>

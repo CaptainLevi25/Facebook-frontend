@@ -46,7 +46,7 @@ export default function Post({
       setuserdata(userdata);
       console.log(userdata);
     } catch {
-      alert("sorry could not fetch user data");
+      console.log("sorry could not fetch user data");
     }
   };
   useEffect(() => {
@@ -62,7 +62,7 @@ export default function Post({
       await tx.wait();
       setjugaad("hello");
       seepostcomment();
-      setmycomment("")
+      setmycomment("");
     } catch {
       console.log("could not comment");
     }
@@ -99,7 +99,7 @@ export default function Post({
   };
   useEffect(() => {
     const interval = setInterval(() => {
-    seepostcomment();
+      seepostcomment();
     }, 5000);
     return () => clearInterval(interval);
   }, []);
@@ -147,19 +147,25 @@ export default function Post({
               </span>
             </div>
             <div className="postBottomRight">
-              <span onClick={()=>{setcomop(!comop);seepostcomment();}} className="postCommentText">
+              <span
+                onClick={() => {
+                  setcomop(!comop);
+                  seepostcomment();
+                }}
+                className="postCommentText"
+              >
                 comments
               </span>
             </div>
           </div>
         </div>
       </div>
-      <div className={`${comop ? "comment": "comment comment1"}`}>
+      <div className={`${comop ? "comment" : "comment comment1"}`}>
         <div className="myinput">
           <div>
             <img
               className="postProfileImg"
-              src={user.profilepic}
+              src={user ? user.profilepic : localStorage.getItem('pic')}
               alt=""
               srcset=""
             />
@@ -173,7 +179,6 @@ export default function Post({
                 id="standard-adornment-amount"
                 onChange={(e) => {
                   setmycomment(e.target.value);
-                  
                 }}
               />
             </FormControl>

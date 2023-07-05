@@ -34,7 +34,7 @@ export default function Topbar({user,profilee,setprofile,contract,finduser}) {
         <div className="topbarLinks">
           <span><button style={{cursor:"pointer",marginRight:"12px"}} 
           
-          onMouseEnter={()=>{ setprofile(text);}}
+          onMouseEnter={()=>{ text!==""&& setprofile(text);}}
           onClick={()=>{
             finduser();nav('/profile');
           }}> Find User </button></span>
@@ -55,7 +55,7 @@ export default function Topbar({user,profilee,setprofile,contract,finduser}) {
             <span className="topbarIconBadge">1</span>
           </div>
         </div>
-        <img onMouseEnter={()=>{setprofile(user.name)}} onClick={()=> {finduser();nav('/profile')}} src={user.profilepic} alt="" className="topbarImg"/>
+        <img onMouseEnter={()=>{setprofile(localStorage.getItem("name"))}} onClick={()=> { setprofile( localStorage.getItem("name"));finduser();nav('/profile')}} src={user ?user.profilepic:localStorage.getItem('pic')} alt="" className="topbarImg"/>
       </div>
     </div>
   );

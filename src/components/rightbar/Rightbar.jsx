@@ -44,13 +44,13 @@ export default function Rightbar({
   } 
   useEffect(()=>{
     contract &&  seemyfriend();
-  },[j])
-  useEffect(() => {
-    const interval = setInterval(() => {
-    seemyfriend();
-    }, 15000);
-    return () => clearInterval(interval);
-  }, []);
+  },[j,contract])
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //   seemyfriend();
+  //   }, 15000);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   const HomeRightbar = ({j}) => {
     return (
@@ -126,7 +126,7 @@ export default function Rightbar({
         <h3 className="rightbarTitle"></h3>
         <div className="rightbarInfo">
 
-          {((profiledata && profiledata.userName!==user.name)  && !already) &&
+          {((profiledata && profiledata.userName!==localStorage.getItem('name'))  && !already) &&
           <button
             onClick={()=>sendreq()}
             style={{

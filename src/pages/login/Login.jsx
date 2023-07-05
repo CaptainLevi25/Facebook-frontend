@@ -73,18 +73,22 @@ export default function Login({ contract, account, provider, setuser, user }) {
     const regg = parseInt(reg);
     if (reg !== 0) {
       const data = await contract.getOthersUserStruct(regg);
-      setuser({ name: data.userName, profilepic: data.profilePic });
+    setuser({ name: data.userName, profilepic: data.profilePic });
     //    localStorage.setItem('username',user.name);
     //  localStorage.setItem('userpic',user.profilepic);
     // setuser({name : localStorage.getItem('username'), profilepic:  localStorage.getItem('userpic')})
-     
+    localStorage.setItem("name",data.userName);
+    localStorage.setItem("pic",data.profilePic);
+   // setuser({ name: localStorage.getItem("name"), profilepic: localStorage.getItem("pic")});
     }}catch{
+
       console.log("no user")
     }
   };
   useEffect(() => {
     account && check();
-  }, [account]);
+  }, [account,contract]);
+  
   const register = async () => {
     try {
       await contract.registerUser(
@@ -96,9 +100,15 @@ export default function Login({ contract, account, provider, setuser, user }) {
         profilepic:
          coverpic ? coverpic : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXhwKw2TfJxMfz-tLOJtYsWgcivmu8CbSKe1iBR7H-Ug&s",
       });
+      localStorage.setItem("name",text);
+      localStorage.setItem("pic",coverpic);
       
      
     } catch {
+     user ? localStorage.setItem("name",user.name):  setuser({ name: localStorage.getItem("name"), profilepic: localStorage.getItem("pic")});
+     user ? localStorage.setItem("pic",user.profilepic):  setuser({ name: localStorage.getItem("name"), profilepic: localStorage.getItem("pic")});
+     
+    setuser({ name: localStorage.getItem("name"), profilepic: localStorage.getItem("pic")});
       nav("/home");
     }
   };
@@ -147,7 +157,7 @@ export default function Login({ contract, account, provider, setuser, user }) {
             </div>
             <div className="inputbtn">
               {" "}
-              <button onClick={register} className="loginButton">
+              <button  onClick={register} className="loginButton">
                 Log In
               </button>
             </div>

@@ -25,7 +25,7 @@ export default function Sidebar({user,contract,setj}) {
   useEffect(()=>{
     contract &&  friendreq();
     setj(jugg);
-  },[jugg])
+  },[jugg,contract])
   useEffect(() => {
     const interval = setInterval(() => {
       contract &&  friendreq();
@@ -49,8 +49,11 @@ export default function Sidebar({user,contract,setj}) {
     
   };
   useEffect(()=>{
-     all();
-  },[])
+   contract &&   all();
+  },[contract])
+  useEffect(()=>{
+    contract &&   all();
+   },[])
   return (
     <div className="sidebar">
       <div className="sidebarWrapper">

@@ -35,7 +35,7 @@ export default function Profile({ user, contract, account,profilee,profiledata,s
                 src="assets/post/3.jpeg"
                 alt=""
               />
-              <img className="profileUserImg" src={profiledata?profiledata.profilePic:user.profilepic} alt="" />
+              <img className="profileUserImg" src={profiledata?profiledata.profilePic:localStorage.getItem('pic')} alt="" />
             </div>
             <div className="profileInfo">
               <h4 className="profileInfoName">{profiledata?profiledata.userName:"Bro"}</h4>

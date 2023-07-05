@@ -76,18 +76,18 @@ export default function Feed({
       console.log(error);
     }
   };
-  useEffect(() => {
-    const interval = setInterval(() => {
-    seeallpost();
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //   seeallpost();
+  //   }, 5000);
+  //   return () => clearInterval(interval);
+  // }, []);
   useEffect(()=>{
     seeallpost()
   },[])
   useEffect(()=>{
     seeallpost();
-  },[jugaad,loc.pathname,profiledata])
+  },[jugaad,loc.pathname,profiledata,account,contract])
   // setTimeout(() => {
   //  post && seeallpost()
   // }, 20000);

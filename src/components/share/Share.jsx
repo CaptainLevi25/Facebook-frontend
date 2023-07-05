@@ -85,10 +85,10 @@ export default function Share({user,contract, account, provider,seeallpost,setju
     <div className="share">
       <div className="shareWrapper">
         <div className="shareTop">
-          <img className="shareProfileImg" src={user.profilepic} alt="" />
+          <img className="shareProfileImg" src={localStorage.getItem('pic')||user.profilepic} alt="" />
           <div  className="shareInput">
               <div className="mana">
-            <div><h5>What's in your mind {user.name}</h5></div>
+            <div><h5>What's in your mind {localStorage.getItem('name')||user.name}</h5></div>
             {uploaded&&uploaded!==100 &&
           <div className="progressbar"   style={{ width: `${uploaded}%` }}>
               <ProgressBar now={uploaded} striped variant="success"  label={`${uploaded}%`}/>
